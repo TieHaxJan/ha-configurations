@@ -157,7 +157,10 @@ action:
               - service_template: light.turn_on
                 target: !input light
                 data_template:
-                  color_temp: "{{ ( value - (state_attr( light.entity_id , 'hs_color' )[0] or 0)) % 360 }}"
+                  hs_color:
+                    - "{{ ( value - (state_attr( light.entity_id , 'hs_color' )[0] or 0)) % 360 }}"
+                    - 100
+                  transition: 0.5
     - conditions:
         - "{{ command == 'step_color_temp' }}"
         - "{{ cluster_id == 768 }}"
@@ -172,7 +175,10 @@ action:
               - service_template: light.turn_on
                 target: !input light
                 data_template:
-                  color_temp: "{{ ( value + (state_attr( light.entity_id , 'hs_color' )[0] or 0)) % 360 }}"
+                  hs_color:
+                    - "{{ ( value + (state_attr( light.entity_id , 'hs_color' )[0] or 0)) % 360 }}"
+                    - 100
+                  transition: 0.5
 
     # Command Mode: Color Hue
     - conditions:
